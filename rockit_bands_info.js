@@ -5,7 +5,10 @@ var json2csv = require('json2csv');
 var Converter = require("csvtojson").Converter;
 var converter = new Converter({});
 
-var nightmare = Nightmare({ show: true })
+var nightmare = Nightmare({
+  show: true,
+  openDevTools: true
+})
 
 function writeCsv(arr, headers, name) {
     // console.log("writing csv");
@@ -24,7 +27,7 @@ var date = new Date().toISOString().slice(0, 19);
 var category = "Rock";
 var bands = [];
 var fileName = "data/"+category+"_bands"+date;
-var urlList = fs.readFileSync('rockit_Rock_2016-04-10.csv');
+var urlList = fs.readFileSync('data/rockit_Rock_2016-04-10.csv');
 
 converter.fromString(urlList.toString(), function(err,result){
   console.log("Number of bandsUrls:",result.length)
