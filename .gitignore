@@ -1,3 +1,6 @@
+#file and directories to exclude
+data
+
 # Logs
 logs
 *.log
