@@ -6,8 +6,8 @@ var Converter = require("csvtojson").Converter;
 var converter = new Converter({});
 
 var nightmare = Nightmare({
-  show: true,
-  openDevTools: true
+  show: false,
+  openDevTools: false
 })
 
 function writeCsv(arr, headers, name) {
