@@ -23,6 +23,7 @@ Starting from a list of url artist's pages the scraper, this scraper is able to 
 ### Remote Ubuntu Server
 1. Install some libraries (?)
 2. Run the same scripts as above but append the following at the beginning `xvfb-run`, so: `xvfb-run node rockit_bands_link.js` and `xvfb-run node rockit_bands_info.js`
+3. Use screen to make it scraping forever (https://help.ubuntu.com/community/Screen, https://www.mattcutts.com/blog/a-quick-tutorial-on-screen/)
 
 ## Credits
 Used cool thing found around:
