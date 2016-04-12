@@ -42,7 +42,7 @@ converter.fromString(urlList.toString(), function(err,result){
     nightmare
       .goto(listOfUrls[num])
       .wait(".content-left")
-      .wait(Math.random() * (3000 - 500) + 500)
+      .wait(Math.random() * (1000 - 250) + 250)
       .inject('js', 'node_modules/jquery/dist/jquery.js')
       .evaluate(function () {
           //take the container of all the relevant info
@@ -71,7 +71,7 @@ converter.fromString(urlList.toString(), function(err,result){
         nightmare
           .goto(listOfUrls[num]+"/biografia")
           .wait(".content-left")
-          .wait(Math.random() * (3000 - 500) + 500)
+          .wait(Math.random() * (1000 - 250) + 250)
           .inject('js', 'node_modules/jquery/dist/jquery.js')
           .evaluate(function () {
               //take the container of all the relevant info
@@ -83,7 +83,7 @@ converter.fromString(urlList.toString(), function(err,result){
             //Get albums
             nightmare
               .goto(listOfUrls[num]+"/discografia")
-              .wait(Math.random() * (3000 - 500) + 500)
+              .wait(Math.random() * (1000 - 250) + 250)
               .inject('js', 'node_modules/jquery/dist/jquery.js')
               .evaluate(function () {
                   //take the container of all the relevant info
@@ -104,7 +104,7 @@ converter.fromString(urlList.toString(), function(err,result){
 
                 nightmare
                   .goto(listOfUrls[num]+"/articoli")
-                  .wait(Math.random() * (3000 - 500) + 500)
+                  .wait(Math.random() * (1000 - 250) + 250)
                   .inject('js', 'node_modules/jquery/dist/jquery.js')
                   .evaluate(function () {
                       //take the container of all the relevant info
