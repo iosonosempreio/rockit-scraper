@@ -6,7 +6,7 @@ var Converter = require("csvtojson").Converter;
 var converter = new Converter({});
 
 var nightmare = Nightmare({
-  show: false,
+  show: true,
   openDevTools: false
 })
 
@@ -35,7 +35,7 @@ converter.fromString(urlList.toString(), function(err,result){
   result.forEach(function(d,i){
     listOfUrls.push(d.url);
   })
-  i=3837;
+  i=3919;
   scrapeBandsInfo(i);
   function scrapeBandsInfo(num){
     var thisArtist = {};
