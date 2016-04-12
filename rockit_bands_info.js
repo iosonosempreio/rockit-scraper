@@ -35,7 +35,7 @@ converter.fromString(urlList.toString(), function(err,result){
   result.forEach(function(d,i){
     listOfUrls.push(d.url);
   })
-  i=3919;
+  i=3966;
   scrapeBandsInfo(i);
   function scrapeBandsInfo(num){
     var thisArtist = {};
@@ -121,9 +121,10 @@ converter.fromString(urlList.toString(), function(err,result){
                       })
                     })
                     //Finished the collecting of information, push in the array object
-                    bands.push(thisArtist)
+		thisArtist.num = num;                    
+		bands.push(thisArtist)
                     console.log(num,thisArtist)
-                    writeCsv(bands, ["name", "url", "info", "likes", "genre", "img", "administrators", "bio", "albums"], fileName )
+                    writeCsv(bands, ["num","name", "url", "info", "likes", "genre", "img", "administrators", "bio", "albums"], fileName )
                     //go on with iterative function
                     num++;
                     if (num<listOfUrls.length){
