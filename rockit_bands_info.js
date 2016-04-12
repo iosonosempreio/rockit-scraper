@@ -17,7 +17,7 @@ function writeCsv(arr, headers, name) {
         // console.log(csv)
         fs.writeFile(name+'.csv', csv, function(err) {
             if (err) throw err;
-            console.log('file CSV saved');
+            console.log('file CSV saved', new Date().toISOString().slice(0, 19));
         });
     });
 }
