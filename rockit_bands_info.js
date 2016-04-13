@@ -35,7 +35,7 @@ converter.fromString(urlList.toString(), function(err,result){
   result.forEach(function(d,i){
     listOfUrls.push(d.url);
   })
-  i=4176;
+  i=4214;
   scrapeBandsInfo(i);
   function scrapeBandsInfo(num){
     var thisArtist = {};
