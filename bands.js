@@ -5,8 +5,8 @@ var d3 = require('d3');
 var json2csv = require('json2csv');
 
 var nightmare = Nightmare({
-  dock: true,
-  openDevTools: true,
+  // dock: true,
+  // openDevTools: true,
   show: true,
 })
 
