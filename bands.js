@@ -39,11 +39,9 @@ function appendLastArtist(file, artist){
   // ["num","name", "url", "info", "likes", "genre", "img", "administrators", "bio", "albums"]
   var arrayObj = []
   arrayObj.push(artist)
-  var newLine = "\n"+artist.num+","+artist.name+","+artist.url+","+artist.info+","+artist.likes+","+artist.genre+","+artist.img+","+artist.administrators+","+artist.bio+","+artist.albums+"\n";
-  newLine = "\n"+artist.num;
+  var newLine = "";
   json2csv({ data: arrayObj, fields: columsHeaders }, function(err, csv) {
     newLine = "\n"+csv.replace('"num","name","url","info","likes","genre","img","administrators","bio","albums"\n','')
-    console.log('<<<',newLine,'>>>')
   });
 
   fs.appendFile(file, newLine, function (err) {
@@ -73,7 +71,6 @@ var bands = [];
 var fileName = "data/"+category+"_bands"+date;
 
 converter.fromString(fs.readFileSync('data/rockit_Rock_2016-04-10.csv').toString(), function(err,result){
-  console.log("Number of bandsUrls:",result.length, "4265")
   var listOfUrls=[];
   result.forEach(function(d,i){
     listOfUrls.push(d.url);
@@ -85,6 +82,7 @@ converter.fromString(fs.readFileSync('data/rockit_Rock_2016-04-10.csv').toString
 
     i=bands[bands.length-1].num;
     i++
+    console.log("Number of bandsUrls:",result.length, " - starting from:",i)
     scrapeBandsInfo(i);
     function scrapeBandsInfo(num){
       var thisArtist = {};
@@ -172,7 +170,7 @@ converter.fromString(fs.readFileSync('data/rockit_Rock_2016-04-10.csv').toString
                       //Finished the collecting of information, push in the array object
   					thisArtist.num = num;
   					bands.push(thisArtist)
-                      console.log(num,thisArtist)
+                      console.log(num,thisArtist.name,thisArtist.genre,thisArtist.albums.length)
                       appendLastArtist(artistsCSV, thisArtist)
                       writeCsv(bands, ["num","name", "url", "info", "likes", "genre", "img", "administrators", "bio", "albums"], fileName )
                       //go on with iterative function
