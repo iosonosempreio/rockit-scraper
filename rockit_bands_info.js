@@ -35,14 +35,14 @@ converter.fromString(urlList.toString(), function(err,result){
   result.forEach(function(d,i){
     listOfUrls.push(d.url);
   })
-  i=3966;
+  i=4176;
   scrapeBandsInfo(i);
   function scrapeBandsInfo(num){
     var thisArtist = {};
     nightmare
       .goto(listOfUrls[num])
       .wait(".content-left")
-      .wait(Math.random() * (1000 - 250) + 250)
+      .wait(Math.random() * (2000 - 400) + 400)
       .inject('js', 'node_modules/jquery/dist/jquery.js')
       .evaluate(function () {
           //take the container of all the relevant info
@@ -71,7 +71,7 @@ converter.fromString(urlList.toString(), function(err,result){
         nightmare
           .goto(listOfUrls[num]+"/biografia")
           .wait(".content-left")
-          .wait(Math.random() * (1000 - 250) + 250)
+          .wait(Math.random() * (2000 - 400) + 400)
           .inject('js', 'node_modules/jquery/dist/jquery.js')
           .evaluate(function () {
               //take the container of all the relevant info
@@ -83,7 +83,7 @@ converter.fromString(urlList.toString(), function(err,result){
             //Get albums
             nightmare
               .goto(listOfUrls[num]+"/discografia")
-              .wait(Math.random() * (1000 - 250) + 250)
+              .wait(Math.random() * (2000 - 400) + 400)
               .inject('js', 'node_modules/jquery/dist/jquery.js')
               .evaluate(function () {
                   //take the container of all the relevant info
@@ -104,7 +104,7 @@ converter.fromString(urlList.toString(), function(err,result){
 
                 nightmare
                   .goto(listOfUrls[num]+"/articoli")
-                  .wait(Math.random() * (1000 - 250) + 250)
+                  .wait(Math.random() * (2000 - 400) + 400)
                   .inject('js', 'node_modules/jquery/dist/jquery.js')
                   .evaluate(function () {
                       //take the container of all the relevant info
@@ -121,8 +121,8 @@ converter.fromString(urlList.toString(), function(err,result){
                       })
                     })
                     //Finished the collecting of information, push in the array object
-		thisArtist.num = num;                    
-		bands.push(thisArtist)
+					thisArtist.num = num;                    
+					bands.push(thisArtist)
                     console.log(num,thisArtist)
                     writeCsv(bands, ["num","name", "url", "info", "likes", "genre", "img", "administrators", "bio", "albums"], fileName )
                     //go on with iterative function
