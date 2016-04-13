@@ -77,9 +77,12 @@ converter.fromString(fs.readFileSync('data/rockit_Rock_2016-04-10.csv').toString
   })
   var artistsCSV = 'data/bands_rock.csv';
   var converter2 = new Converter({});
-  converter2.fromString(fs.readFileSync(artistsCSV).toString(), function(err,bands){
-    if (err) throw err;
 
+
+  var dataBands = fs.readFileSync(artistsCSV).toString()
+
+  converter2.fromString(dataBands, function(err,bands){
+    if (err) {console.log(err);throw err;}
     i=bands[bands.length-1].num;
     i++
     console.log("Number of bandsUrls:",result.length, " - starting from:",i)

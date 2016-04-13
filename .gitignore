@@ -1,4 +1,5 @@
 #file and directories to exclude
+.DS_Store
 data
 
 # Logs
