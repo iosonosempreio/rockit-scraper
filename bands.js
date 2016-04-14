@@ -152,10 +152,12 @@ function appendLastArtist(file, artist, headers){
   json2csv({ data: artist, fields: headers, del: '\t', hasCSVColumnTitle:false, eol:'\n' }, function(err, tsv) {
       if (err) console.log(err);
       // console.log(tsv)
-      fs.appendFile(file, tsv, function (err) {
-        if (err) throw err;
-        console.log(artist.name,'appended to file!');
-      });
+      fs.appendFileSync(file, tsv//, function (err) {
+        // if (err) throw err;
+        // console.log(artist.name,'appended to file!');
+      //}
+      );
+      console.log(artist.name,'appended to file!')
   });
 }
 

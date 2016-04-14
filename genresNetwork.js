@@ -75,49 +75,98 @@ function k_combinations(set, k) {
 }
 
 //"name","url","info","likes","genre","img","administrators","bio","albums"
-var data = fs.readFileSync('data-refinement-scripts/artists.txt');
-var nodesRAW = []
-var nodes = []
-var edges = []
+var data = fs.readFileSync('data/rock.tsv');
+var nodesRAW = [], nodes = [], edges = [], nonAttivi = []
 
-converter.fromString(data.toString(), function(err,result){
-  // console.log(result)
-  result.forEach(function(b){
-    // console.log(b.genre)
-
-    //generate array with all the sources (then we will remove duplicates)
-    b.genre.replace("  (NON PIU\' ATTIVO)", "").split(", ").forEach(function(e){
+d3.tsv.parse(data.toString(), function(a){
+	// console.log("artist:",a.name)
+	//generate array with all the sources (then we will remove duplicates)
+	a.genre.replace("  (NON PIU\' ATTIVO)", "").split(", ").forEach(function(e){
+      e = e.trim()
       nodesRAW.push(e)
     })
-    //calculate edges
-    k_combinations(b.genre.replace("  (NON PIU\' ATTIVO)", "").split(", "), 2).forEach(function(e){
-      edges.push({
-        sourceLabel:e[0],
-        targetLabel:e[1]
-      })
-    })
-  })
-
-  //remove dublicates in nodes array & replace edges names with includes
-  nodesRAW = d3.set(nodesRAW).values()
-
-  nodesRAW.forEach(function(n,i){
-    nodes.push({
-      label:n,
-      id: i+1
-    })
-  })
-  nodes.forEach(function(n,i){
-    n.id = i+1
-  })
-
-  edges.forEach(function(e){
-    nodes.forEach(function(n){
-      if (e.sourceLabel == n.label) e.source = n.id
-      if (e.targetLabel == n.label) e.target = n.id
-    })
-  })
-
-  writeCsv(nodes, ['id','label'], 'genres-network/nodes');
-  writeCsv(edges, ['source','target'], 'genres-network/edges');
+    
+	if (a.genre.replace("  (NON PIU\' ATTIVO)", "").split(", ").length > 1) {
+		//calculate edges
+	    k_combinations( a.genre.trim().replace("  (NON PIU\' ATTIVO)", "").split(", "), 2 ).forEach(function(e){
+	      edges.push({
+	        sourceLabel:e[0],
+	        targetLabel:e[1]
+	      })
+	    })
+	}
+}, function(error, rows) {
+	console.log(rows);
 });
+
+//remove dublicates in nodes array & replace edges names with includes
+nodesRAW = d3.set(nodesRAW).values()
+
+	nodesRAW.forEach(function(n,i){
+    nodes.push({
+		label:n,
+		id: i+1
+    })
+})
+nodes.forEach(function(n,i){
+	n.id = i+1
+})
+
+edges.forEach(function(e){
+	nodes.forEach(function(n){
+		if (e.sourceLabel == n.label) e.source = n.id
+		if (e.targetLabel == n.label) e.target = n.id
+	})
+})
+
+writeCsv(nodes, ['id','label'], 'data/genres-network/nodes');
+writeCsv(edges, ['source','target'], 'data/genres-network/edges');
+
+
+
+
+
+
+
+
+// converter.fromString(data.toString(), function(err,result){
+//   // console.log(result)
+//   result.forEach(function(b){
+//     // console.log(b.genre)
+
+//     //generate array with all the sources (then we will remove duplicates)
+//     b.genre.replace("  (NON PIU\' ATTIVO)", "").split(", ").forEach(function(e){
+//       nodesRAW.push(e)
+//     })
+//     //calculate edges
+//     k_combinations(b.genre.replace("  (NON PIU\' ATTIVO)", "").split(", "), 2).forEach(function(e){
+//       edges.push({
+//         sourceLabel:e[0],
+//         targetLabel:e[1]
+//       })
+//     })
+//   })
+
+//   //remove dublicates in nodes array & replace edges names with includes
+//   nodesRAW = d3.set(nodesRAW).values()
+
+//   nodesRAW.forEach(function(n,i){
+//     nodes.push({
+//       label:n,
+//       id: i+1
+//     })
+//   })
+//   nodes.forEach(function(n,i){
+//     n.id = i+1
+//   })
+
+//   edges.forEach(function(e){
+//     nodes.forEach(function(n){
+//       if (e.sourceLabel == n.label) e.source = n.id
+//       if (e.targetLabel == n.label) e.target = n.id
+//     })
+//   })
+
+//   writeCsv(nodes, ['id','label'], 'genres-network/nodes');
+//   writeCsv(edges, ['source','target'], 'genres-network/edges');
+// });
