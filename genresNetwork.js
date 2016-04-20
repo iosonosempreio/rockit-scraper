@@ -2,15 +2,16 @@ var fs = require('fs');
 var json2csv = require('json2csv');
 var Converter = require("csvtojson").Converter;
 var d3 = require("d3")
+var _ = require("lodash")
 
 var converter = new Converter({});
 
 function writeCsv(arr, headers, name) {
     // console.log("writing csv");
-    json2csv({ data: arr, fields: headers }, function(err, csv) {
+    json2csv({ data: arr, fields: headers, del: '\t' }, function(err, csv) {
         if (err) console.log(err);
         // console.log(csv)
-        fs.writeFile(name+'.csv', csv, function(err) {
+        fs.writeFile(name+'.tsv', csv, function(err) {
             if (err) throw err;
             console.log('file CSV saved');
         });
@@ -102,7 +103,7 @@ d3.tsv.parse(data.toString(), function(a){
 //remove dublicates in nodes array & replace edges names with includes
 nodesRAW = d3.set(nodesRAW).values()
 
-	nodesRAW.forEach(function(n,i){
+nodesRAW.forEach(function(n,i){
     nodes.push({
 		label:n,
 		id: i+1
@@ -114,13 +115,32 @@ nodes.forEach(function(n,i){
 
 edges.forEach(function(e){
 	nodes.forEach(function(n){
-		if (e.sourceLabel == n.label) e.source = n.id
-		if (e.targetLabel == n.label) e.target = n.id
+		if (e.sourceLabel == n.label) {
+			e.source = n.id
+			delete e.sourceLabel
+		}
+		if (e.targetLabel == n.label) {
+			e.target = n.id
+			delete e.targetLabel
+		}
 	})
 })
 
+edges.forEach(function(e,i){
+	var count = 1
+	edges.forEach(function(c){
+		if( e.source == c.source && e.target ==c.target) {
+			e.weight = count;
+			// console.log(i, e.source,c.source," - ",e.target,c.target, " > ", e.weight);
+			count++;
+		}
+	})
+})
+
+edges = _.uniqWith(edges, _.isEqual);
+
 writeCsv(nodes, ['id','label'], 'data/genres-network/nodes');
-writeCsv(edges, ['source','target'], 'data/genres-network/edges');
+writeCsv(edges, ['source','target','weight'], 'data/genres-network/edges');
 
 
 

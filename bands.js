@@ -5,18 +5,20 @@ var d3 = require('d3');
 var json2csv = require('json2csv');
 
 var nightmare = Nightmare({
-  // dock: true,
-  // openDevTools: true,
+  dock: true,
+  openDevTools: true,
+  waitTimeout: 10000, // in ms
   show: true,
 })
 
-var date = new Date().toISOString().slice(0, 19);
-var timeToWait = randomly(1000,250)
-var columsHeaders = ["id","name", "url", "info", "likes", "genre", "img", "administrators", "bio", "albums"]
-var profileLinks = "data/rock-links.csv"
-var savedArtists = 'data/rock.tsv';
-var bands=[], doneInSession=0;
-var fileName = "data/rockDump"+date
+var date = new Date().toISOString().slice(0, 19),
+    timeToWait = randomly(500,10),
+    columsHeaders = ["id","name", "url", "info", "likes", "genre", "img", "administrators", "bio", "albums", "articles"],
+    profileLinks = "data/rock-links.csv",
+    savedArtists = 'data/rock.tsv',
+    bands=[],
+    doneInSession=0,
+    fileName = "data/rockDump"+date
 
 
 fs.readFile(profileLinks, function(err,links){
@@ -157,7 +159,7 @@ function appendLastArtist(file, artist, headers){
         // console.log(artist.name,'appended to file!');
       //}
       );
-      console.log(artist.name,'appended to file!')
+      console.log(new Date().toISOString().slice(11, 19), artist.name,'appended to file!')
   });
 }
 
