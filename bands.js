@@ -6,7 +6,7 @@ var json2csv = require('json2csv');
 
 var nightmare = Nightmare({
   dock: true,
-  openDevTools: true,
+  openDevTools: false,
   waitTimeout: 10000, // in ms
   show: true,
 })
